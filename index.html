@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navneet Singh - Portfolio</title>
+    <!-- Google Fonts - Inter for the whole website -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Custom styles for the font and section heading underline */
+        body {
+            font-family: 'Inter', sans-serif; /* Applied Inter font */
+            background-color: #f4f7f6;
+            font-size: 16px; /* Set base font size to 16px */
+        }
+        .section-heading {
+            position: relative;
+            display: inline-block;
+            padding-bottom: 5px;
+            margin-bottom: 24px;
+        }
+        .section-heading::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50%;
+            height: 3px;
+            background-color: #2563EB; /* Navy blue related accent (Tailwind blue-600) */
+            border-radius: 2px;
+        }
+        /* Keyframe animations for subtle entry effects */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .animate-fade-in-down {
+            animation: fadeInDown 0.8s ease-out forwards;
+        }
+        .animate-fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        /* Active Navigation Item Styles */
+        .nav-item-link.active-nav-item {
+            color: #DBEAFE; /* Tailwind blue-100 or similar lighter blue for active text */
+            position: relative;
+        }
+        .nav-item-link.active-nav-item::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -5px; /* Adjust as needed for underline position */
+            width: 100%;
+            height: 2px; /* Underline thickness */
+            background-color: #3B82F6; /* Tailwind blue-500 for the underline */
+            border-radius: 1px;
+        }
+
+        /* Adjust scroll position for fixed header */
+        section {
+            scroll-margin-top: 60px; /* Adjust this value based on your header's height + desired buffer */
+        }
+
+        /* Custom glow for profile picture (removed from this version's Hero, but kept in CSS for future use if needed) */
+        .custom-glow {
+            box-shadow: 0 0 0 5px rgba(59, 130, 246, 0.5), /* Tailwind blue-500 with 50% opacity */
+                        0 0 20px 10px rgba(59, 130, 246, 0.3); /* Wider, softer glow */
+            transition: box-shadow 0.3s ease-in-out;
+        }
+        .custom-glow:hover {
+            box-shadow: 0 0 0 7px rgba(59, 130, 246, 0.7),
+                        0 0 30px 15px rgba(59, 130, 246, 0.5);
+        }
+    </style>
+</head>
+<body class="text-gray-800 bg-gray-50">
+
+    <!-- Header Section: Fixed at the top, includes name, navigation links, and resume download -->
+    <header class="bg-blue-950 text-white py-3 px-4 shadow-md sticky top-0 z-50">
+        <div class="container mx-auto flex items-center justify-between flex-wrap">
+            <!-- Name (Top Left) -->
+            <h1 class="text-2xl font-bold text-blue-400 mr-2 sm:mr-6">Navneet Singh</h1>
+            
+            <!-- Navigation Links (Centered, wraps on small screens, single line on wider screens) -->
+            <nav class="flex-grow flex justify-center w-full sm:w-auto mt-2 sm:mt-0 order-3 sm:order-none">
+                <ul class="flex flex-wrap justify-center space-x-1 sm:space-x-2 text-base">
+                    <li><a href="#about" class="nav-item-link hover:text-blue-300 transition duration-300 px-1 py-1 rounded-md">Home</a></li>
+                    <li><a href="#experience" class="nav-item-link hover:text-blue-300 transition duration-300 px-1 py-1 rounded-md">Experience</a></li>
+                    <li><a href="#projects" class="nav-item-link hover:text-blue-300 transition duration-300 px-1 py-1 rounded-md">Projects</a></li>
+                    <li><a href="#skills" class="nav-item-link hover:text-blue-300 transition duration-300 px-1 py-1 rounded-md">Skills</a></li>
+                    <li><a href="#education" class="nav-item-link hover:text-blue-300 transition duration-300 px-1 py-1 rounded-md">Education</a></li>
+                    <li><a href="#contact" class="nav-item-link hover:text-blue-300 transition duration-300 px-1 py-1 rounded-md">Contact</a></li>
+                </ul>
+            </nav>
+            
+            <!-- Resume Download Button (Top Right) -->
+            <div class="ml-2 sm:ml-6 mt-2 sm:mt-0 order-2 sm:order-none">
+                <a href="https://drive.google.com/file/d/1hchdmEx-uopZZLVV9Ib7_cgJuledUlwP/view?usp=sharing" download="Navneet_Singh_Resume.pdf"
+                   class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-1 px-4 rounded-full shadow-md transition duration-300">
+                   Resume
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero/About Section: Font sizes adjusted -->
+    <section id="about" class="py-20 bg-gradient-to-br from-blue-900 via-blue-700 to-white text-gray-900 text-center">
+        <div class="container mx-auto px-6 flex flex-col md:flex-row items-center justify-center gap-8">
+            <!-- Profile Picture Section -->
+            <div class="flex-shrink-0 mb-8 md:mb-0">
+                <!-- Corrected image source for Canvas preview -->
+                <img src="https://i.postimg.cc/qMt5GgDx/Imagenav1.png" 
+                     alt="Navneet Singh Profile Picture"
+                     class="w-48 h-48 md:w-64 md:h-64 rounded-full border-4 border-white shadow-lg object-cover"
+                     onerror="this.onerror=null;this.src='https://placehold.co/256x256/3B82F6/FFFFFF?text=Profile+Pic'">
+            </div>
+            <!-- Text Content Section -->
+            <div class="text-center md:text-left md:ml-8">
+                <h2 class="text-5xl font-extrabold mb-4 animate-fade-in-down">Hello, I'm Navneet Singh</h2>
+                <p class="text-base font-light mb-8 animate-fade-in-up">Passionate Software Engineer with expertise in Full-Stack Development and Robust Backend Systems.</p>
+                <div class="flex justify-center md:justify-start space-x-6 text-3xl">
+                    <a href="mailto:navneetsinghit25@gmail.com" class="hover:text-blue-600 transition duration-300" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                    <a href="https://linkedin.com/in/navneetsingh25" target="_blank" class="hover:text-blue-600 transition duration-300" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://github.com/Navi2510" target="_blank" class="hover:text-blue-600 transition duration-300" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="https://leetcode.com/u/navneetsinghit25/" target="_blank" class="hover:text-blue-600 transition duration-300" aria-label="LeetCode"><i class="fas fa-code"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section: Details professional work history -->
+    <section id="experience" class="py-16 bg-blue-50">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold mb-10 text-center section-heading mx-auto">Experience</h2>
+
+            <!-- Tech Mahindra Experience -->
+            <div class="bg-white p-8 rounded-lg shadow-md mb-8 hover:shadow-lg transition duration-300">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-2">
+                    <h3 class="text-2xl font-semibold">Associate Software Engineer</h3>
+                    <span class="text-gray-600 text-sm md:text-base mt-1 md:mt-0">Sept 2024 – Present</span>
+                </div>
+                <p class="text-lg font-medium text-blue-700 mb-2">Tech Mahindra</p>
+                <p class="text-gray-600 mb-4">Bangalore, India</p>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Completed training in Java, Spring Boot, JavaScript, and React.js, gaining expertise in full-stack development, covering over 800 hours of hands-on experience.</li>
+                    <li>Developed "QuickHire", a product leveraging Spring Boot, MySQL, Thymeleaf, HTML, CSS, Javascript and Bootstrap, achieving 70-80% Product efficiency.</li>
+                    <li>Developed 8 to 10 mini projects during training, incorporating CRUD operations and Spring Security.</li>
+                </ul>
+            </div>
+
+            <!-- Oodles Technologies Experience -->
+            <div class="bg-white p-8 rounded-lg shadow-md mb-8 hover:shadow-lg transition duration-300">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-2">
+                    <h3 class="text-2xl font-semibold">Assistant Consultant - Development (Internship)</h3>
+                    <span class="text-gray-600 text-sm md:text-base mt-1 md:mt-0">July 2024 – Sept 2024</span>
+                </div>
+                <p class="text-lg font-medium text-blue-700 mb-2">Oodles Technologies</p>
+                <p class="text-gray-600 mb-4">Gurgaon, India</p>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Developed and optimized RESTful APIs using Java Spring Boot, reducing API response time by 30%.</li>
+                    <li>Implemented database optimizations using MySQL and Hibernate, enhancing query execution speed.</li>
+                    <li>Collaborated with frontend teams to integrate APIs, improving system interoperability.</li>
+                    <li>Performed code reviews and debugging, ensuring high code quality and security standards.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section: Showcases key projects with descriptions -->
+    <section id="projects" class="py-16 bg-blue-100">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold mb-10 text-center section-heading mx-auto">Projects</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Project 1: CareerHive (Adjusted Content) -->
+                <div class="bg-white p-8 rounded-lg shadow-md hover:shadow-lg transition duration-300">
+                    <h3 class="text-2xl font-semibold mb-2 text-blue-700"><a href="https://github.com/Navi2510/CareerHive">CareerHive</a></h3>
+                    <p class="text-sm text-gray-600 mb-4">Java Springboot, Spring Data JPA, MySQL, Thymeleaf, HTML, CSS | Feb 2025</p>
+                    <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+                        <li>Developed a comprehensive job portal, enabling thousands of users to manage job applications seamlessly.</li>
+                        <li>Implemented robust recruiter functionalities (post jobs, track applicants, CRUD), significantly reducing manual effort.</li>
+                        <li>Designed intuitive job seeker features (resume uploads, profile creation, job application), leading to more efficient applications.</li>
+                        <li>Integrated advanced search filters (WFH, Hybrid, Onsite) for enhanced job discovery and optimized backend for a responsive user experience.</li>
+                    </ul>
+                    <div class="flex space-x-4">
+                        <!-- Placeholder for project links. Uncomment and add actual links when available -->
+                        <!-- <a href="#" target="_blank" class="text-blue-600 hover:underline flex items-center"><i class="fas fa-external-link-alt mr-2"></i>Live Demo</a> -->
+                        <!-- <a href="#" target="_blank" class="text-gray-800 hover:underline flex items-center"><i class="fab fa-github mr-2"></i>GitHub Repo</a> -->
+                    </div>
+                </div>
+
+                <!-- Project 2: Hostel Finder -->
+                <div class="bg-white p-8 rounded-lg shadow-md hover:shadow-lg transition duration-300">
+                    <h3 class="text-2xl font-semibold mb-2 text-blue-700"><a href="https://github.com/Navi2510/Hostel-Booking-Website">Hostel Finder</a></h3>
+                    <p class="text-sm text-gray-600 mb-4">HTML, CSS, JavaScript, Bootstrap | Mar 2024</p>
+                    <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
+                        <li>Developed a user-friendly hostel booking platform that helps students find affordable accommodations in different cities.</li>
+                        <li>Implemented a responsive front-end using Bootstrap and JavaScript to ensure seamless user experience across devices.</li>
+                        <li>Integrated a secure payment gateway to allow hassle-free hostel room bookings.</li>
+                    </ul>
+                    <div class="flex space-x-4">
+                        <!-- Placeholder for project links. Uncomment and add actual links when available -->
+                        <!-- <a href="#" target="_blank" class="text-blue-600 hover:underline flex items-center"><i class="fas fa-external-link-alt mr-2"></i>Live Demo</a> -->
+                        <!-- <a href="#" target="_blank" class="text-gray-800 hover:underline flex items-center"><i class="fab fa-github mr-2"></i>GitHub Repo</a> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technical Skills Section: Lists programming languages, technologies, and concepts -->
+    <section id="skills" class="py-16 bg-blue-50">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold mb-10 text-center section-heading mx-auto">Technical Skills</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 text-lg">
+                <!-- Languages Card -->
+                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300">
+                    <h3 class="text-xl font-semibold mb-3 text-blue-700 flex items-center"><i class="fas fa-code mr-3"></i>Languages</h3>
+                    <ul class="list-disc list-inside space-y-1">
+                        <li>C</li>
+                        <li>Core Java</li>
+                        <li>HTML</li>
+                        <li>CSS</li>
+                        <li>JavaScript</li>
+                    </ul>
+                </div>
+                <!-- Technologies Card -->
+                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300">
+                    <h3 class="text-xl font-semibold mb-3 text-blue-700 flex items-center"><i class="fas fa-laptop-code mr-3"></i>Technologies</h3>
+                    <ul class="list-disc list-inside space-y-1">
+                        <li>Hibernate</li>
+                        <li>Bootstrap</li>
+                        <li>SpringBoot</li>
+                        <li>Spring Data JPA</li>
+                        <li>Microservices</li>
+                        <li>Node.js</li>
+                    </ul>
+                </div>
+                <!-- Concepts Card -->
+                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300">
+                    <h3 class="text-xl font-semibold mb-3 text-blue-700 flex items-center"><i class="fas fa-lightbulb mr-3"></i>Concepts</h3>
+                    <ul class="list-disc list-inside space-y-1">
+                        <li>Database Management System</li>
+                        <li>Object Oriented Programming</li>
+                        <li>Operating System</li>
+                        <li>Data Structures and Algorithms</li>
+                    </ul>
+                </div>
+                <!-- Database Card -->
+                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300">
+                    <h3 class="text-xl font-semibold mb-3 text-blue-700 flex items-center"><i class="fas fa-database mr-3"></i>Database</h3>
+                    <ul class="list-disc list-inside space-y-1">
+                        <li>MySQL</li>
+                        <li>MongoDB</li>
+                        <li>Oracle</li>
+                    </ul>
+                </div>
+                <!-- IDEs Card -->
+                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300">
+                    <h3 class="text-xl font-semibold mb-3 text-blue-700 flex items-center"><i class="fas fa-terminal mr-3"></i>IDEs</h3>
+                    <ul class="list-disc list-inside space-y-1">
+                        <li>VS Code</li>
+                        <li>Intellij Idea</li>
+                        <li>Eclipse</li>
+                        <li>Netbeans</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education Section: Displays academic background -->
+    <section id="education" class="py-16 bg-blue-100">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold mb-10 text-center section-heading mx-auto">Education</h2>
+
+            <!-- B.Tech Education -->
+            <div class="bg-white p-8 rounded-lg shadow-md mb-8 hover:shadow-lg transition duration-300">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-2">
+                    <h3 class="text-2xl font-semibold">Bachelor of Technology in Information Technology</h3>
+                    <span class="text-gray-600 text-sm md:text-base mt-1 md:mt-0">Nov 2020 - June 2024</span>
+                </div>
+                <p class="text-lg font-medium text-blue-700 mb-2">Dr. A.P.J. Abdul Kalam Technical University</p>
+                <p class="text-gray-600 mb-4">Lucknow, Uttar Pradesh (GPA: 8.41 / 10)</p>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Relevant Coursework: Data Structures and Algorithms Concepts, Operating System, DBMS, Cloud Computing, Web Technology</li>
+                </ul>
+            </div>
+
+            <!-- Intermediate Education -->
+            <div class="bg-white p-8 rounded-lg shadow-md mb-8 hover:shadow-lg transition duration-300">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-2">
+                    <h3 class="text-2xl font-semibold">Intermediate (PCM)</h3>
+                    <span class="text-gray-600 text-sm md:text-base mt-1 md:mt-0">Apr 2019 - Mar 2020</span>
+                </div>
+                <p class="text-lg font-medium text-blue-700 mb-2">Reliance Academy Sr. Secondary School</p>
+                <p class="text-gray-600 mb-4">Gorakhpur, Uttar Pradesh (Percentage: 87.8%)</p>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Relevant Coursework: PCM (Physics, Chemistry, Mathematics)</li>
+                </ul>
+            </div>
+
+            <!-- High School Education -->
+            <div class="bg-white p-8 rounded-lg shadow-md hover:shadow-lg transition duration-300">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-2">
+                    <h3 class="text-2xl font-semibold">High School (Science)</h3>
+                    <span class="text-gray-600 text-sm md:text-base mt-1 md:mt-0">Apr 2017 - Mar 2018</span>
+                </div>
+                <p class="text-lg font-medium text-blue-700 mb-2">Don Bosco Sr. Secondary School</p>
+                <p class="text-600 mb-4">Gorakhpur, Uttar Pradesh (Percentage: 90%)</p>
+                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                    <li>Relevant Coursework: Science</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section: Provides contact details and social links -->
+    <section id="contact" class="py-16 bg-gradient-to-br from-blue-900 via-blue-700 to-white text-gray-900 text-center">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold mb-8 section-heading mx-auto">Get In Touch</h2>
+            <p class="text-base mb-8">Have a question or want to work together? Feel free to reach out!</p>
+            <div class="flex flex-wrap justify-center items-center space-y-4 md:space-y-0 md:space-x-8 text-base">
+                <a href="tel:+917007749979" class="flex items-center hover:text-blue-600 transition duration-300 rounded-md p-2">
+                    <i class="fas fa-phone mr-2"></i> +91-7007749979
+                </a>
+                <a href="mailto:navneetsinghit25@gmail.com" class="flex items-center hover:text-blue-600 transition duration-300 rounded-md p-2">
+                    <i class="fas fa-envelope mr-2"></i> navneetsinghit25@gmail.com
+                </a>
+                <a href="https://linkedin.com/in/navneetsingh25" target="_blank" class="flex items-center hover:text-blue-600 transition duration-300 rounded-md p-2">
+                    <i class="fab fa-linkedin mr-2"></i> linkedin.com/in/navneetsingh25
+                </a>
+                <a href="https://github.com/Navi2510" target="_blank" class="flex items-center hover:text-blue-600 transition duration-300 rounded-md p-2">
+                    <i class="fab fa-github mr-2"></i> github.com/Navi2510
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section: Copyright information -->
+    <footer class="bg-blue-950 text-white py-8 text-center text-sm">
+        <div class="container mx-auto">
+            <p>&copy; <span id="current-year"></span> Navneet Singh. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault(); 
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Set current year in footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // Intersection Observer for active navigation links
+        const sections = document.querySelectorAll('section'); // Select all sections
+        const navLinks = document.querySelectorAll('.nav-item-link'); // Select all nav links
+
+        const observerOptions = {
+            root: null, // Use the viewport as the root
+            rootMargin: '-50% 0px -50% 0px', // When the middle of the section is in view
+            threshold: 0 // Observe any intersection change
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                const targetId = entry.target.id;
+                const correspondingLink = document.querySelector(`nav a[href="#${targetId}"]`);
+
+                if (entry.isIntersecting && correspondingLink) {
+                    // Check if the section is truly in the "active" zone (e.g., center of viewport)
+                    const rect = entry.target.getBoundingClientRect();
+                    const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+                    
+                    // Consider a section "active" if its center is within the central 50% of the viewport
+                    const isCenteredEnough = (rect.top + rect.height / 2 > viewportHeight * 0.25) &&
+                                             (rect.top + rect.height / 2 < viewportHeight * 0.75);
+
+                    if (isCenteredEnough) {
+                        navLinks.forEach(link => link.classList.remove('active-nav-item')); // Remove from all
+                        correspondingLink.classList.add('active-nav-item'); // Add to current
+                    }
+                }
+            });
+        }, observerOptions);
+
+        // Observe each section
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+
+        // Special handling for "Home" link if it refers to the first section (About)
+        // Ensure "Home" is active when at the very top or in the "About" section
+        const homeLink = document.querySelector('nav a[href="#about"]'); 
+        
+        // Function to update active link based on scroll position
+        const updateActiveLinkOnScroll = () => {
+            let currentActiveLink = null;
+            sections.forEach(section => {
+                const rect = section.getBoundingClientRect();
+                const correspondingLink = document.querySelector(`nav a[href="#${section.id}"]`);
+                
+                // If section is at least 30% visible from the top
+                if (rect.top <= window.innerHeight * 0.3 && rect.bottom >= window.innerHeight * 0.3) {
+                    currentActiveLink = correspondingLink;
+                }
+            });
+
+            navLinks.forEach(link => link.classList.remove('active-nav-item'));
+            if (currentActiveLink) {
+                currentActiveLink.classList.add('active-nav-item');
+            } else if (window.scrollY === 0) { // If at the very top, ensure Home/About is active
+                 homeLink.classList.add('active-nav-item');
+            }
+        };
+
+        // Attach the scroll listener
+        window.addEventListener('scroll', updateActiveLinkOnScroll);
+
+        // Initial check on load
+        updateActiveLinkOnScroll();
+    </script>
+</body>
+</html>
