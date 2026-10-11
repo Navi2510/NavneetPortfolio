@@ -1,573 +1,631 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Navneet Singh - Portfolio</title>
-    <!-- Google Fonts - Inter for the whole website -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    <!-- Tailwind CSS CDN -->
+    <title>Navneet Singh | Java Backend Engineer</title>
+    <meta name="description" content="Navneet Singh – Java Backend Engineer at Flipkart (MAPI team). Building high-volume APIs, microservices and Assisto, a live verified-helper booking platform.">
+    <meta property="og:title" content="Navneet Singh | Java Backend Engineer">
+    <meta property="og:description" content="Java, Spring Boot, Microservices. SDE-I at Flipkart. Founder of Assisto.">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#172554">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script>
+        tailwind.config = { darkMode: 'class' };
+        // apply saved theme early to avoid flash
+        try {
+            const t = localStorage.getItem('theme');
+            if (t === 'dark' || (!t && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+            }
+        } catch (e) {}
+    </script>
     <style>
-        /* Custom styles for the font and section heading underline */
-        body {
-            font-family: 'Inter', sans-serif; /* Applied Inter font */
-            background-color: #f4f7f6;
-            font-size: 16px; /* Set base font size to 16px */
+        body { font-family: 'Inter', sans-serif; }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        section { scroll-margin-top: 72px; }
+
+        .gradient-text {
+            background: linear-gradient(90deg, #60a5fa, #22d3ee, #818cf8);
+            -webkit-background-clip: text; background-clip: text; color: transparent;
         }
-        .section-heading {
-            position: relative;
-            display: inline-block;
-            padding-bottom: 5px;
-            margin-bottom: 24px;
+        .hero-bg {
+            background:
+                radial-gradient(circle at 20% 20%, rgba(59,130,246,.35), transparent 45%),
+                radial-gradient(circle at 80% 70%, rgba(34,211,238,.25), transparent 45%),
+                linear-gradient(135deg, #0b1437 0%, #0f1f5c 55%, #12306e 100%);
         }
+        /* ---------- HERO (light blue) ---------- */
+        .hero-light {
+            background:
+                radial-gradient(circle at 12% 15%, rgba(59,130,246,.20), transparent 45%),
+                radial-gradient(circle at 88% 85%, rgba(34,211,238,.20), transparent 45%),
+                linear-gradient(135deg, #eff6ff 0%, #dbeafe 55%, #e0f2fe 100%);
+        }
+        .dark .hero-light { background: linear-gradient(135deg, #0f172a 0%, #172554 100%); }
+        .gradient-text-hero {
+            background: linear-gradient(90deg, #1d4ed8, #0891b2);
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+        }
+        .dark .gradient-text-hero { background: linear-gradient(90deg, #60a5fa, #22d3ee); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .photo-ring {
+            border: 5px solid #fff;
+            box-shadow: 0 0 0 6px rgba(37,99,235,.22), 0 24px 45px -12px rgba(37,99,235,.45);
+        }
+        .dark .photo-ring { border-color: #1e293b; box-shadow: 0 0 0 6px rgba(96,165,250,.25), 0 24px 45px -12px rgba(0,0,0,.6); }
+
+        .section-heading { position: relative; display: inline-block; padding-bottom: 8px; }
         .section-heading::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 50%;
-            height: 3px;
-            background-color: #2563EB; /* Navy blue related accent (Tailwind blue-600) */
-            border-radius: 2px;
+            content: ''; position: absolute; left: 25%; bottom: 0; width: 50%; height: 3px;
+            background: linear-gradient(90deg, #2563eb, #22d3ee); border-radius: 2px;
         }
-        /* Keyframe animations for subtle entry effects */
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        .animate-fade-in-down {
-            animation: fadeInDown 0.8s ease-out forwards;
-        }
-        .animate-fade-in-up {
-            animation: fadeInUp 0.8s ease-out forwards;
-        }
+        .card { transition: transform .25s ease, box-shadow .25s ease; }
+        .card:hover { transform: translateY(-4px); box-shadow: 0 18px 40px -12px rgba(37,99,235,.28); }
 
-        /* Active Navigation Item Styles */
-        .nav-item-link.active-nav-item {
-            color: #DBEAFE; /* Tailwind blue-100 or similar lighter blue for active text */
-            position: relative;
-        }
-        .nav-item-link.active-nav-item::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: -5px; /* Adjust as needed for underline position */
-            width: 100%;
-            height: 2px; /* Underline thickness */
-            background-color: #3B82F6; /* Tailwind blue-500 for the underline */
-            border-radius: 1px;
-        }
+        .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+        .reveal.visible { opacity: 1; transform: none; }
 
-        /* Adjust scroll position for fixed header */
-        section {
-            scroll-margin-top: 60px; /* Adjust this value based on your header's height + desired buffer */
-        }
+        .nav-link.active { color: #60a5fa; }
+        .nav-link.active::after { content:''; display:block; height:2px; background:#3b82f6; border-radius:2px; margin-top:2px; }
 
-        /* Custom glow for profile picture (removed from this version's Hero, but kept in CSS for future use if needed) */
-        .custom-glow {
-            box-shadow: 0 0 0 5px rgba(59, 130, 246, 0.5), /* Tailwind blue-500 with 50% opacity */
-                        0 0 20px 10px rgba(59, 130, 246, 0.3); /* Wider, softer glow */
-            transition: box-shadow 0.3s ease-in-out;
-        }
-        .custom-glow:hover {
-            box-shadow: 0 0 0 7px rgba(59, 130, 246, 0.7),
-                        0 0 30px 15px rgba(59, 130, 246, 0.5);
-        }
+        /* timeline */
+        .timeline { position: relative; }
+        .timeline::before { content:''; position:absolute; left:11px; top:6px; bottom:6px; width:2px; background: linear-gradient(#3b82f6, #22d3ee); opacity:.5; }
+        .timeline-dot { position:absolute; left:3px; top:8px; width:18px; height:18px; border-radius:50%; background:#2563eb; border:4px solid #dbeafe; }
+        .dark .timeline-dot { border-color:#1e293b; }
+
+        .chip { display:inline-block; padding:2px 10px; border-radius:9999px; font-size:.75rem; font-weight:500; }
+
+        .pulse-dot { width:8px; height:8px; border-radius:50%; background:#22c55e; display:inline-block; box-shadow:0 0 0 0 rgba(34,197,94,.7); animation:pulse 1.8s infinite; }
+        @keyframes pulse { 70% { box-shadow:0 0 0 8px rgba(34,197,94,0);} 100% { box-shadow:0 0 0 0 rgba(34,197,94,0);} }
+
+        .cursor::after { content:'|'; margin-left:2px; animation: blink 1s steps(1) infinite; }
+        @keyframes blink { 50% { opacity:0; } }
+
+        /* scroll progress bar */
+        #progress { position: fixed; top:0; left:0; height:3px; width:0; background:linear-gradient(90deg,#3b82f6,#22d3ee); z-index:100; }
+
+        @media print { header, #progress, #toTop { display:none !important; } .reveal { opacity:1; transform:none; } }
     </style>
 </head>
-<body class="text-gray-800 bg-gray-50">
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-200 antialiased">
+    <div id="progress"></div>
 
-    <!-- Header Section: Fixed at the top, includes name, navigation links, and resume download -->
-    <header class="bg-blue-950 text-white py-3 px-4 shadow-md sticky top-0 z-50">
-        <div class="container mx-auto flex items-center justify-between flex-wrap">
-            <!-- Name (Top Left) -->
-            <h1 class="text-2xl font-bold text-blue-400 mr-2 sm:mr-6">Navneet Singh</h1>
-            
-            <!-- Navigation Links (Centered, wraps on small screens, single line on wider screens) -->
-            <nav class="flex-grow flex justify-center w-full sm:w-auto mt-2 sm:mt-0 order-3 sm:order-none">
-                <ul class="flex flex-wrap justify-center space-x-1 sm:space-x-2 text-base">
-                    <li><a href="#about" class="nav-item-link hover:text-blue-300 transition duration-300 px-1 py-1 rounded-md">Home</a></li>
-                    <li><a href="#experience" class="nav-item-link hover:text-blue-300 transition duration-300 px-1 py-1 rounded-md">Experience</a></li>
-                    <li><a href="#projects" class="nav-item-link hover:text-blue-300 transition duration-300 px-1 py-1 rounded-md">Projects</a></li>
-                    <li><a href="#skills" class="nav-item-link hover:text-blue-300 transition duration-300 px-1 py-1 rounded-md">Skills</a></li>
-                    <li><a href="#education" class="nav-item-link hover:text-blue-300 transition duration-300 px-1 py-1 rounded-md">Education</a></li>
-                    <li><a href="#contact" class="nav-item-link hover:text-blue-300 transition duration-300 px-1 py-1 rounded-md">Contact</a></li>
+    <!-- HEADER -->
+    <header class="sticky top-0 z-50 bg-blue-950/95 backdrop-blur text-white shadow-lg">
+        <div class="container mx-auto px-4 py-3 flex items-center justify-between gap-3">
+            <a href="#about" class="text-xl sm:text-2xl font-extrabold gradient-text whitespace-nowrap">Navneet Singh</a>
+
+            <nav class="hidden lg:block">
+                <ul class="flex items-center gap-5 text-sm font-medium">
+                    <li><a href="#about" class="nav-link hover:text-blue-300 transition">Home</a></li>
+                    <li><a href="#experience" class="nav-link hover:text-blue-300 transition">Experience</a></li>
+                    <li><a href="#assisto" class="nav-link hover:text-blue-300 transition">Assisto</a></li>
+                    <li><a href="#projects" class="nav-link hover:text-blue-300 transition">Projects</a></li>
+                    <li><a href="#skills" class="nav-link hover:text-blue-300 transition">Skills</a></li>
+                    <li><a href="#education" class="nav-link hover:text-blue-300 transition">Education</a></li>
+                    <li><a href="#contact" class="nav-link hover:text-blue-300 transition">Contact</a></li>
                 </ul>
             </nav>
-            
-            <!-- Resume Download Button (Top Right) -->
-            <div class="ml-2 sm:ml-6 mt-2 sm:mt-0 order-2 sm:order-none">
-                <a href="https://drive.google.com/file/d/17KSsu_phsJze_u-zWnWMxgd6CI-KyXah/view?usp=drive_link" download="Navneet_Singh_Resume.pdf"
-                   class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-1 px-4 rounded-full shadow-md transition duration-300">
-                   Resume
+
+            <div class="flex items-center gap-2">
+                <button id="themeToggle" aria-label="Toggle dark mode" class="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 transition flex items-center justify-center">
+                    <i class="fas fa-moon dark:hidden"></i><i class="fas fa-sun hidden dark:inline"></i>
+                </button>
+                <a href="https://drive.google.com/file/d/17KSsu_phsJze_u-zWnWMxgd6CI-KyXah/view?usp=sharing" target="_blank" rel="noopener"
+                   class="bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold py-2 px-4 rounded-full shadow transition">
+                    <i class="fas fa-file-arrow-down mr-1"></i> Resume
                 </a>
+                <button id="menuBtn" class="lg:hidden w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center" aria-label="Menu">
+                    <i class="fas fa-bars"></i>
+                </button>
             </div>
+        </div>
+        <!-- mobile menu -->
+        <div id="mobileMenu" class="hidden lg:hidden border-t border-white/10 px-4 pb-3">
+            <ul class="grid grid-cols-3 gap-2 pt-3 text-sm text-center">
+                <li><a href="#about" class="block py-2 rounded bg-white/5">Home</a></li>
+                <li><a href="#experience" class="block py-2 rounded bg-white/5">Experience</a></li>
+                <li><a href="#assisto" class="block py-2 rounded bg-white/5">Assisto</a></li>
+                <li><a href="#projects" class="block py-2 rounded bg-white/5">Projects</a></li>
+                <li><a href="#skills" class="block py-2 rounded bg-white/5">Skills</a></li>
+                <li><a href="#education" class="block py-2 rounded bg-white/5">Education</a></li>
+                <li class="col-span-3"><a href="#contact" class="block py-2 rounded bg-white/5">Contact</a></li>
+            </ul>
         </div>
     </header>
 
-    <!-- Hero/About Section: Font sizes adjusted -->
-    <section id="about" class="py-20 bg-gradient-to-br from-blue-900 via-blue-700 to-white text-gray-900 text-center">
-        <div class="container mx-auto px-6 flex flex-col md:flex-row items-center justify-center gap-8">
-            <!-- Profile Picture Section -->
-            <div class="flex-shrink-0 mb-8 md:mb-0">
-                <!-- Corrected image source for Canvas preview -->
-                <img src="https://i.postimg.cc/qMt5GgDx/Imagenav1.png" 
-                     alt="Navneet Singh Profile Picture"
-                     class="w-48 h-48 md:w-64 md:h-64 rounded-full border-4 border-white shadow-lg object-cover"
-                     onerror="this.onerror=null;this.src='https://placehold.co/256x256/3B82F6/FFFFFF?text=Profile+Pic'">
+    <!-- HERO -->
+    <section id="about" class="hero-light relative overflow-hidden text-slate-900 dark:text-white">
+        <div class="container mx-auto px-6 grid md:grid-cols-2 gap-12 md:gap-8 items-center py-16 md:py-24 pb-24 md:pb-32 max-w-6xl">
+            <!-- Text -->
+            <div class="text-center md:text-left order-2 md:order-1">
+                <span class="inline-flex items-center gap-2 bg-white/80 text-blue-800 border border-blue-200 dark:bg-white/10 dark:text-blue-100 dark:border-white/20 rounded-full px-4 py-1.5 text-sm font-medium mb-5">
+                    <span class="pulse-dot"></span> SDE-I @ Flipkart · Bengaluru
+                </span>
+                <h2 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight mb-3">
+                    Hi, I'm<br><span class="gradient-text-hero">Navneet Singh</span>
+                </h2>
+                <p class="text-xl md:text-2xl font-semibold text-blue-800 dark:text-blue-100 mb-4 h-8 cursor" id="typed"></p>
+                <p class="text-slate-600 dark:text-blue-100/90 leading-relaxed mb-7 max-w-xl mx-auto md:mx-0">
+                    Java Backend Developer with 2+ years of experience building high-volume REST APIs and microservices with
+                    Spring Boot, Hibernate/JPA and SQL. Primary backend owner of Flipkart's Travel platform services
+                    (Train search &amp; PNR, Flight Status), and creator of
+                    <a href="https://asisto.in" target="_blank" rel="noopener" class="text-blue-700 dark:text-cyan-300 underline font-semibold">Assisto</a>,
+                    a live verified-helper booking platform.
+                </p>
+
+                <div class="flex flex-wrap justify-center md:justify-start gap-3 mb-7">
+                    <a href="#experience" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-full shadow-lg shadow-blue-600/30 transition">
+                        View My Work <i class="fas fa-arrow-right ml-1"></i>
+                    </a>
+                    <a href="https://asisto.in" target="_blank" rel="noopener" class="bg-white text-blue-700 border border-blue-300 hover:bg-blue-50 dark:bg-white/10 dark:text-white dark:border-white/30 dark:hover:bg-white/20 font-semibold px-6 py-3 rounded-full transition">
+                        <span class="pulse-dot mr-2"></span>Try Assisto Live
+                    </a>
+                    <a href="#contact" class="border border-slate-400 text-slate-700 hover:bg-white/70 dark:border-white/40 dark:text-white dark:hover:bg-white/10 font-semibold px-6 py-3 rounded-full transition">Contact Me</a>
+                </div>
+
+                <div class="flex justify-center md:justify-start gap-3">
+                    <a href="mailto:navneetsinghit25@gmail.com" aria-label="Email" class="w-11 h-11 rounded-full bg-white text-blue-700 shadow hover:bg-blue-600 hover:text-white dark:bg-white/10 dark:text-white dark:hover:bg-white/25 transition flex items-center justify-center text-lg"><i class="fas fa-envelope"></i></a>
+                    <a href="https://linkedin.com/in/navneetsingh25" target="_blank" rel="noopener" aria-label="LinkedIn" class="w-11 h-11 rounded-full bg-white text-blue-700 shadow hover:bg-blue-600 hover:text-white dark:bg-white/10 dark:text-white dark:hover:bg-white/25 transition flex items-center justify-center text-lg"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://github.com/Navi2510" target="_blank" rel="noopener" aria-label="GitHub" class="w-11 h-11 rounded-full bg-white text-blue-700 shadow hover:bg-blue-600 hover:text-white dark:bg-white/10 dark:text-white dark:hover:bg-white/25 transition flex items-center justify-center text-lg"><i class="fab fa-github"></i></a>
+                    <a href="https://leetcode.com/u/navneetsinghit25/" target="_blank" rel="noopener" aria-label="LeetCode" class="w-11 h-11 rounded-full bg-white text-blue-700 shadow hover:bg-blue-600 hover:text-white dark:bg-white/10 dark:text-white dark:hover:bg-white/25 transition flex items-center justify-center text-lg"><i class="fas fa-code"></i></a>
+                </div>
             </div>
-            <!-- Text Content Section -->
-            <div class="text-center md:text-left md:ml-8">
-                <h2 class="text-5xl font-extrabold mb-4 animate-fade-in-down">Hello, I'm Navneet Singh</h2>
-                <p class="text-base font-light mb-8 animate-fade-in-up">Passionate Software Engineer with expertise in Full-Stack Development and Robust Backend Systems.</p>
-                <div class="flex justify-center md:justify-start space-x-6 text-3xl">
-                    <a href="mailto:navneetsinghit25@gmail.com" class="hover:text-blue-600 transition duration-300" aria-label="Email"><i class="fas fa-envelope"></i></a>
-                    <a href="https://linkedin.com/in/navneetsingh25" target="_blank" class="hover:text-blue-600 transition duration-300" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                    <a href="https://github.com/Navi2510" target="_blank" class="hover:text-blue-600 transition duration-300" aria-label="GitHub"><i class="fab fa-github"></i></a>
-                    <a href="https://leetcode.com/u/navneetsinghit25/" target="_blank" class="hover:text-blue-600 transition duration-300" aria-label="LeetCode"><i class="fas fa-code"></i></a>
+
+            <!-- Photo -->
+            <div class="flex justify-center order-1 md:order-2 py-4">
+                <img src="https://i.postimg.cc/qMt5GgDx/Imagenav1.png" alt="Navneet Singh"
+                     class="photo-ring w-48 h-48 sm:w-60 sm:h-60 lg:w-72 lg:h-72 rounded-full object-cover bg-blue-100"
+                     onerror="this.onerror=null;this.src='https://placehold.co/288x288/3B82F6/FFFFFF?text=NS'">
+            </div>
+        </div>
+
+        <!-- soft curve into next section -->
+        <svg class="absolute bottom-0 left-0 w-full text-white dark:text-slate-900" viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true" style="height:60px">
+            <path fill="currentColor" d="M0,40 C240,90 480,0 720,30 C960,60 1200,90 1440,35 L1440,80 L0,80 Z"></path>
+        </svg>
+    </section>
+
+    <!-- STATS -->
+    <section class="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800">
+        <div class="container mx-auto px-6 py-8 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+            <div class="reveal"><p class="text-3xl md:text-4xl font-extrabold text-blue-600 dark:text-blue-400"><span data-count="2" data-suffix="+">0</span></p><p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Years of Experience</p></div>
+            <div class="reveal"><p class="text-3xl md:text-4xl font-extrabold text-blue-600 dark:text-blue-400"><span data-count="90" data-suffix="K+">0</span></p><p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Train searches in 12 hrs</p></div>
+            <div class="reveal"><p class="text-3xl md:text-4xl font-extrabold text-blue-600 dark:text-blue-400"><span data-count="25" data-suffix="+">0</span></p><p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Production REST APIs delivered</p></div>
+            <div class="reveal"><p class="text-3xl md:text-4xl font-extrabold text-blue-600 dark:text-blue-400"><span data-count="30" data-suffix="%">0</span></p><p class="text-sm text-slate-500 dark:text-slate-400 mt-1">API latency reduction (SQL tuning)</p></div>
+        </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section id="experience" class="py-16 bg-blue-50 dark:bg-slate-950">
+        <div class="container mx-auto px-6 md:px-12 lg:px-24 xl:px-36 max-w-6xl">
+            <div class="text-center mb-12 reveal"><h2 class="text-4xl font-bold section-heading">Experience</h2></div>
+
+            <div class="timeline pl-10 space-y-8">
+
+                <!-- Flipkart -->
+                <div class="relative reveal">
+                    <span class="timeline-dot"></span>
+                    <div class="card bg-white dark:bg-slate-900 p-6 md:p-8 rounded-xl shadow-md">
+                        <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-1">
+                            <h3 class="text-xl md:text-2xl font-semibold">Software Development Engineer – I (Java Backend)</h3>
+                            <span class="text-sm text-slate-500 dark:text-slate-400 mt-1 md:mt-0"><i class="far fa-calendar mr-1"></i>March 2026 – Present</span>
+                        </div>
+                        <p class="text-lg font-medium text-blue-700 dark:text-blue-400">Flipkart <span class="text-sm font-normal text-slate-500 dark:text-slate-400">(via Thinkify Labs)</span></p>
+                        <p class="text-slate-500 dark:text-slate-400 mb-4"><i class="fas fa-location-dot mr-1"></i>Bengaluru, Karnataka, India · On-site</p>
+
+                        <ul class="list-disc pl-5 space-y-2 text-slate-700 dark:text-slate-300">
+                            <li>Primary backend owner of <strong>Garuda services</strong> powering Flipkart Travel, handling design, development, releases, production support and Grafana monitoring end to end.</li>
+                            <li>Part of the <strong>MAPI (Mobile API)</strong> team, building Flipkart's API gateway layer for routing, orchestration, aggregation and transformation of high-volume mobile app requests.</li>
+                            <li>Developing backend services for the Travel platform, integrating external partner APIs (<strong>Cleartrip, Ixigo, Cirium</strong>) for train and flight services.</li>
+                            <li>Independently designed and built the <strong>Train integration</strong> end to end (search + real-time PNR status); handled <strong>90K+ searches in 12 hours</strong> and serves <strong>4K+ PNR checks per day</strong>.</li>
+                            <li>Built the <strong>Flight Status</strong> integration on Cirium APIs with request validation, response transformation and fault-tolerant error handling.</li>
+                            <li>Worked on <strong>Asgard</strong> orchestration and contributed to the <strong>Rome-to-Asgard migration</strong> of API flows, improving distributed API orchestration, maintainability and enabling dynamic, configuration-driven response generation.</li>
+                            <li>Optimized external REST API integrations and troubleshot production issues, improving service reliability and performance; contributed to observability improvements through Cosmos dashboards and pod-level performance tuning.</li>
+                        </ul>
+                        <div class="flex flex-wrap gap-2 mt-4">
+                            <span class="chip bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-200">Java</span>
+                            <span class="chip bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-200">DropWizard</span>
+                            <span class="chip bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-200">Spring Boot</span>
+                            <span class="chip bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-200">Microservices</span>
+                            <span class="chip bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-200">API Gateway</span>
+                            <span class="chip bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-200">Grafana</span>
+                            <span class="chip bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-200">Cosmos</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tech Mahindra -->
+                <div class="relative reveal">
+                    <span class="timeline-dot"></span>
+                    <div class="card bg-white dark:bg-slate-900 p-6 md:p-8 rounded-xl shadow-md">
+                        <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-1">
+                            <h3 class="text-xl md:text-2xl font-semibold">Associate Software Engineer (Java Backend)</h3>
+                            <span class="text-sm text-slate-500 dark:text-slate-400 mt-1 md:mt-0"><i class="far fa-calendar mr-1"></i>Sept 2024 – March 2026</span>
+                        </div>
+                        <p class="text-lg font-medium text-blue-700 dark:text-blue-400">Tech Mahindra · Full-time</p>
+                        <p class="text-slate-500 dark:text-slate-400 mb-4"><i class="fas fa-location-dot mr-1"></i>Bengaluru, Karnataka, India · On-site</p>
+
+                        <ul class="list-disc pl-5 space-y-2 text-slate-700 dark:text-slate-300">
+                            <li>Delivered <strong>25+ REST APIs</strong> for <strong>Blue Shield of California</strong> (US healthcare) across Audit, Contact Management, Role Types and Eligibility, owning requirements, API docs, implementation and release on a greenfield enterprise application.</li>
+                            <li>Cut API response times by <strong>~30%</strong> by optimizing SQL queries and indexes on 100K+ record tables (JPA/Hibernate), reducing database load during peak reporting and batch runs.</li>
+                            <li>Implemented <strong>JWT authentication and RBAC</strong> with Spring Security, covering token issuance, refresh and endpoint-level authorization across microservices.</li>
+                            <li>Analyzed Figma designs to define API requirements, user flows and endpoint structures; implemented CSV upload/download with template generation, parsing, validation and persistence.</li>
+                            <li>Containerized services with <strong>Docker and Kubernetes</strong>; contributed to Jenkins CI/CD pipelines and ELK, Prometheus and Grafana monitoring; part of the production on-call rotation.</li>
+                        </ul>
+                        <div class="flex flex-wrap gap-2 mt-4">
+                            <span class="chip bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-200">Java</span>
+                            <span class="chip bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-200">Spring Boot</span>
+                            <span class="chip bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-200">Spring Security</span>
+                            <span class="chip bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-200">JPA/Hibernate</span>
+                            <span class="chip bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-200">SQL</span>
+                            <span class="chip bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-200">Docker</span>
+                            <span class="chip bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-200">Kubernetes</span>
+                            <span class="chip bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-200">Jenkins</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Oodles -->
+                <div class="relative reveal">
+                    <span class="timeline-dot"></span>
+                    <div class="card bg-white dark:bg-slate-900 p-6 md:p-8 rounded-xl shadow-md">
+                        <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-1">
+                            <h3 class="text-xl md:text-2xl font-semibold">Back End Developer</h3>
+                            <span class="text-sm text-slate-500 dark:text-slate-400 mt-1 md:mt-0"><i class="far fa-calendar mr-1"></i>Mar 2024 – Sept 2024</span>
+                        </div>
+                        <p class="text-lg font-medium text-blue-700 dark:text-blue-400">Oodles Technologies · Full-time</p>
+                        <p class="text-slate-500 dark:text-slate-400 mb-4"><i class="fas fa-location-dot mr-1"></i>Gurugram, Haryana, India · On-site</p>
+
+                        <ul class="list-disc pl-5 space-y-2 text-slate-700 dark:text-slate-300">
+                            <li>Developed and optimized high-performance RESTful APIs using Java and Spring Boot, improving response time by <strong>~30%</strong>.</li>
+                            <li>Enhanced MySQL query performance and applied Hibernate best practices to reduce server load and speed up data retrieval.</li>
+                            <li>Collaborated closely with frontend teams to design and integrate APIs for seamless module communication.</li>
+                            <li>Conducted code reviews, debugging and performance tuning to maintain production-grade quality.</li>
+                        </ul>
+                        <div class="flex flex-wrap gap-2 mt-4">
+                            <span class="chip bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-200">Java</span>
+                            <span class="chip bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-200">Spring Boot</span>
+                            <span class="chip bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-200">MySQL</span>
+                            <span class="chip bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-200">Hibernate</span>
+                            <span class="chip bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-200">Linux</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Experience Section: Details professional work history -->
-    <section id="experience" class="py-16 bg-blue-50">
-        <div class="container mx-auto px-8 md:px-16 lg:px-28 xl:px-36">
-            <h2 class="text-4xl font-bold mb-10 text-center section-heading mx-auto">Experience</h2>
+    <!-- ASSISTO (FEATURED) -->
+    <section id="assisto" class="py-16 bg-gradient-to-b from-white to-blue-50 dark:from-slate-900 dark:to-slate-950">
+        <div class="container mx-auto px-6 md:px-12 lg:px-24 max-w-6xl">
+            <div class="text-center mb-10 reveal">
+                <span class="chip bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-200 mb-3"><span class="pulse-dot mr-2"></span>Live · Oct 2026</span><br>
+                <h2 class="text-4xl font-bold section-heading">Featured Project: Assisto</h2>
+                <p class="mt-5 text-slate-600 dark:text-slate-400 max-w-3xl mx-auto">
+                    A verified helper booking platform: book trusted, background-verified local helpers on demand for assist-only, non-medical tasks,
+                    from accompanying a parent to a hospital visit to errands for families living away from home.
+                </p>
+            </div>
 
-            <!-- Flipkart Experience -->
-            <div class="bg-white p-8 rounded-lg shadow-md mb-8 hover:shadow-lg transition duration-300">
-                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-2">
-                    <h3 class="text-2xl font-semibold">Software Development Engineer - I (Java Backend)</h3>
-                    <span class="text-gray-600 text-sm md:text-base mt-1 md:mt-0">March 2026 – Present</span>
-                </div>
-                <p class="text-lg font-medium text-blue-700 mb-2">Flipkart</p>
-                <p class="text-gray-600 mb-4">Bengaluru, Karnataka, India · On-site</p>
-            
-                <ul class="list-disc list-inside text-gray-700 space-y-2">
-                    <li>Working in the MAPI (Mobile API) team, contributing to Flipkart’s API gateway ecosystem responsible for routing, aggregating, and transforming millions of daily client requests.</li>
-            
-                    <li>Contributing to backend systems powering the Travel section of the Flipkart application by integrating external partner APIs including Cleartrip and Ixigo for buses, hotels, flights, and train booking services.</li>
-            
-                    <li>Working on Asgard, a backend orchestration service responsible for aggregating responses from multiple downstream microservices and composing unified client-facing APIs.</li>
-            
-                    <li>Contributed to the migration of services from Rome to Asgard, enabling more dynamic and configuration-driven response generation while improving maintainability and scalability.</li>
-            
-                    <li>Integrated and optimized external REST APIs by handling request orchestration, response transformation, validation, and fault-tolerant communication between distributed microservices while improving latency and service reliability.</li>
-            
-                    <li>Developed scalable backend APIs and reusable service components using Java and microservices architecture, contributing to Search & Browse migration, observability improvements through Cosmos dashboards, pod-level performance tuning, and production-ready backend reliability by following clean coding and SOLID principles.</li>
-            
-                    <li><strong>Tech Stack:</strong> Java, DropWizard, Spring Boot, Microservices, REST APIs, Distributed Systems, Git, Cosmos, API Gateway.</li>
-                </ul>
-            </div>
-    
-            <!-- Tech Mahindra Experience -->
-            <div class="bg-white p-8 rounded-lg shadow-md mb-8 hover:shadow-lg transition duration-300">
-                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-2">
-                    <h3 class="text-2xl font-semibold">Associate Software Engineer</h3>
-                    <span class="text-gray-600 text-sm md:text-base mt-1 md:mt-0">Sept 2024 – Present</span>
-                </div>
-                <p class="text-lg font-medium text-blue-700 mb-2">Tech Mahindra · Full-time</p>
-                <p class="text-gray-600 mb-4">Bengaluru, Karnataka, India · On-site</p>
-    
-                <ul class="list-disc list-inside text-gray-700 space-y-2">
-                    <li>Working as a Backend Developer for Client: Blue Shield of California on a greenfield enterprise application built from scratch.</li>
-                    <li>Designed and developed 25+ RESTful APIs for modules including Audit, Contact Lookup, Role Types, and Contact Management.</li>
-                    <li>Analyzed Figma designs to define API requirements, user flows, and endpoint structures aligned with business logic.</li>
-                    <li>Prepared detailed API documentation covering request/response models, validations, and error handling guidelines.</li>
-                    <li>Implemented CSV upload & download functionality with template generation, file parsing, field validation, and database persistence.</li>
-                    <li>Performed unit testing and executed SQL queries to ensure data integrity, reliability, and performance optimization.</li>
-                    <li>Contributed to scalable microservices architecture in an agile environment, delivering production-ready backend features.</li>
-                    <li><strong>Tech Stack:</strong> Java, Spring Boot, REST APIs, SQL, Microservices, Git, BitBucket, Jira.</li>
-                </ul>
-            </div>
-    
-            <!-- Oodles Technologies Experience -->
-            <div class="bg-white p-8 rounded-lg shadow-md mb-8 hover:shadow-lg transition duration-300">
-                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-2">
-                    <h3 class="text-2xl font-semibold">Back End Developer</h3>
-                    <span class="text-gray-600 text-sm md:text-base mt-1 md:mt-0">Mar 2024 – Sept 2024</span>
-                </div>
-                <p class="text-lg font-medium text-blue-700 mb-2">Oodles Technologies · Full-time</p>
-                <p class="text-gray-600 mb-4">Gurugram, Haryana, India · On-site</p>
-    
-                <ul class="list-disc list-inside text-gray-700 space-y-2">
-                    <li>Developed and optimized high-performance RESTful APIs using Java and Spring Boot, improving response time by ~30%.</li>
-                    <li>Enhanced MySQL query performance and applied Hibernate best practices to reduce server load and improve data retrieval speed.</li>
-                    <li>Collaborated closely with frontend teams to design and integrate APIs for seamless module communication.</li>
-                    <li>Conducted code reviews, debugging, and performance tuning to maintain production-grade quality standards.</li>
-                    <li>Followed clean architecture principles and industry best practices to build scalable and maintainable backend systems.</li>
-                    <li><strong>Tech Stack:</strong> Java, Spring Boot, MySQL, Hibernate, REST APIs, Git, GitHub, Linux.</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-    <!-- Projects Section: Showcases key projects with descriptions -->
-    <section id="projects" class="py-16 bg-blue-100">
-        <div class="container mx-auto px-8 md:px-16 lg:px-28 xl:px-36">
-            <h2 class="text-4xl font-bold mb-10 text-center section-heading mx-auto">Projects</h2>
+            <div class="grid lg:grid-cols-5 gap-8 items-start">
+                <!-- left: story -->
+                <div class="lg:col-span-3 space-y-6 reveal">
+                    <div class="card bg-white dark:bg-slate-900 rounded-xl shadow-md p-6 md:p-8">
+                        <h3 class="text-xl font-semibold text-blue-700 dark:text-blue-400 mb-3"><i class="fas fa-lightbulb mr-2"></i>The Problem</h3>
+                        <p class="text-slate-700 dark:text-slate-300 leading-relaxed">
+                            Millions of people in India move to other cities for work, while their parents and family stay behind.
+                            When a hospital visit, paperwork or an errand comes up, there is no reliable, verified person to help on short notice.
+                            Assisto solves this with on-demand, verified local helpers who can be booked in minutes, with transparent fixed-price plans.
+                        </p>
+                    </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- Project 1: CareerHive (Adjusted Content) -->
-                <div class="bg-white p-8 rounded-lg shadow-md hover:shadow-lg transition duration-300">
-                    <h3 class="text-2xl font-semibold mb-2 text-blue-700"><a href="https://github.com/Navi2510/CareerHive">CareerHive</a></h3>
-                    <p class="text-sm text-gray-600 mb-4">Java Springboot, Spring Data JPA, MySQL, Thymeleaf, HTML, CSS | Feb 2025</p>
-                    <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
-                        <li>Developed a comprehensive job portal, enabling thousands of users to manage job applications seamlessly.</li>
-                        <li>Implemented robust recruiter functionalities (post jobs, track applicants, CRUD), significantly reducing manual effort.</li>
-                        <li>Designed intuitive job seeker features (resume uploads, profile creation, job application), leading to more efficient applications.</li>
-                        <li>Integrated advanced search filters (WFH, Hybrid, Onsite) for enhanced job discovery and optimized backend for a responsive user experience.</li>
-                    </ul>
-                    <div class="flex space-x-4">
-                        <!-- Placeholder for project links. Uncomment and add actual links when available -->
-                        <!-- <a href="#" target="_blank" class="text-blue-600 hover:underline flex items-center"><i class="fas fa-external-link-alt mr-2"></i>Live Demo</a> -->
-                        <a href="https://github.com/Navi2510/CareerHive" target="_blank" class="text-gray-800 hover:underline flex items-center"><i class="fab fa-github mr-2"></i>GitHub Repo</a>
+                    <div class="card bg-white dark:bg-slate-900 rounded-xl shadow-md p-6 md:p-8">
+                        <h3 class="text-xl font-semibold text-blue-700 dark:text-blue-400 mb-3"><i class="fas fa-list-check mr-2"></i>What I Built</h3>
+                        <ul class="list-disc pl-5 space-y-2 text-slate-700 dark:text-slate-300">
+                            <li><strong>Three-role marketplace:</strong> dedicated Customer, Helper and Admin workflows on Spring Boot REST APIs and a React frontend.</li>
+                            <li><strong>Nearby-helper dispatch (Rapido/Uber-style):</strong> location-based matching, round-based job offers with TTL, and <em>first-accept-wins</em> assignment so one job is never double-assigned.</li>
+                            <li><strong>Security:</strong> JWT authentication with refresh-token rotation, role-based access control (RBAC), account lockout, and a helper verification flow before anyone can accept jobs.</li>
+                            <li><strong>Booking lifecycle:</strong> status management with PIN-verified job start/end, pricing, payment workflows and full audit tracking of every state change.</li>
+                            <li><strong>Pricing:</strong> fixed-price plans plus travel cost and GST handling, designed to vary by region.</li>
+                            <li><strong>Bilingual UI:</strong> English and Hindi so the product is usable by its Indian audience.</li>
+                            <li><strong>Production-ready:</strong> Dockerized PostgreSQL, backend and frontend services with Flyway database migrations, hosted on DigitalOcean.</li>
+                            <li><strong>CI/CD:</strong> GitHub Actions pipeline that auto-deploys every push to the production server.</li>
+                        </ul>
+                    </div>
+
+                    <div class="card bg-white dark:bg-slate-900 rounded-xl shadow-md p-6 md:p-8">
+                        <h3 class="text-xl font-semibold text-blue-700 dark:text-blue-400 mb-3"><i class="fas fa-route mr-2"></i>How a Booking Works</h3>
+                        <ol class="space-y-3">
+                            <li class="flex gap-3"><span class="flex-shrink-0 w-7 h-7 rounded-full bg-blue-600 text-white text-sm font-bold flex items-center justify-center">1</span><span class="text-slate-700 dark:text-slate-300"><strong>Customer books</strong> a helper, choosing a plan and location.</span></li>
+                            <li class="flex gap-3"><span class="flex-shrink-0 w-7 h-7 rounded-full bg-blue-600 text-white text-sm font-bold flex items-center justify-center">2</span><span class="text-slate-700 dark:text-slate-300"><strong>Dispatch engine</strong> finds the nearest verified helpers and sends round-based offers with a time-to-live.</span></li>
+                            <li class="flex gap-3"><span class="flex-shrink-0 w-7 h-7 rounded-full bg-blue-600 text-white text-sm font-bold flex items-center justify-center">3</span><span class="text-slate-700 dark:text-slate-300"><strong>First helper to accept wins</strong>; the others' offers expire automatically.</span></li>
+                            <li class="flex gap-3"><span class="flex-shrink-0 w-7 h-7 rounded-full bg-blue-600 text-white text-sm font-bold flex items-center justify-center">4</span><span class="text-slate-700 dark:text-slate-300"><strong>PIN-verified start</strong> confirms the right helper has arrived; the job is tracked through its lifecycle.</span></li>
+                            <li class="flex gap-3"><span class="flex-shrink-0 w-7 h-7 rounded-full bg-blue-600 text-white text-sm font-bold flex items-center justify-center">5</span><span class="text-slate-700 dark:text-slate-300"><strong>PIN-verified end</strong>, then payment and an audit trail of the whole booking.</span></li>
+                        </ol>
                     </div>
                 </div>
 
-                <!-- Project 2: Hostel Finder -->
-                <div class="bg-white p-8 rounded-lg shadow-md hover:shadow-lg transition duration-300">
-                    <h3 class="text-2xl font-semibold mb-2 text-blue-700"><a href="https://github.com/Navi2510/Hostel-Booking-Website">Hostel Finder</a></h3>
-                    <p class="text-sm text-gray-600 mb-4">HTML, CSS, JavaScript, Bootstrap | Mar 2024</p>
-                    <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
-                        <li>Developed a user-friendly hostel booking platform that helps students find affordable accommodations in different cities.</li>
-                        <li>Implemented a responsive front-end using Bootstrap and JavaScript to ensure seamless user experience across devices.</li>
-                        <li>Integrated a secure payment gateway to allow hassle-free hostel room bookings.</li>
-                    </ul>
-                    <div class="flex space-x-4">
-                        <!-- Placeholder for project links. Uncomment and add actual links when available -->
-                        <!-- <a href="#" target="_blank" class="text-blue-600 hover:underline flex items-center"><i class="fas fa-external-link-alt mr-2"></i>Live Demo</a> -->
-                        <a href="https://github.com/Navi2510/Hostel-Booking-Website" target="_blank" class="text-gray-800 hover:underline flex items-center"><i class="fab fa-github mr-2"></i>GitHub Repo</a>
-                    </div>
-                </div>
-
-                <!-- Project: PlayX -->
-                <div class="bg-white p-8 rounded-lg shadow-md hover:shadow-lg transition duration-300">
-                    <h3 class="text-2xl font-semibold mb-2 text-blue-700"><a href="https://github.com/Navi2510/PlayX">PlayX</a></h3>
-                    <p class="text-sm text-gray-600 mb-4">React.js, RapidAPI, HTML, CSS | Oct 2023</p>
-                    <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
-                        <li>Built YouTube-like video streaming platform using React.js and YouTube Data API.</li>
-                        <li>Implemented search functionality, category filtering, and responsive UI.</li>
-                        <li>Developed video player interface with playlist management features.</li>
-                    </ul>
-                    <div class="flex space-x-4">
-                        <!-- Placeholder for project links. Uncomment and add actual links when available -->
-                        <a href="https://play-x-ten.vercel.app/"><i class="fas fa-external-link-alt mr-2"></i>Live Demo</a>
-                        <a href = "https://github.com/Navi2510/PlayX"><i class="fab fa-github mr-2"></i>GitHub Repo</a>
-                    </div>
-                </div>
-                
-                <!-- Project 4: Order Management System (OMS) -->
-                <div class="bg-white p-8 rounded-lg shadow-md hover:shadow-lg transition duration-300">
-                    <h3 class="text-2xl font-semibold mb-2 text-blue-700">
-                        <a href="https://github.com/Navi2510/Order-Management-System-Backend">Order Management System (OMS)</a>
-                    </h3>
-                    <p class="text-sm text-gray-600 mb-4">
-                        Java, Spring Boot, Spring Security, JPA/Hibernate, MySQL | 2025
-                    </p>
-                
-                    <ul class="list-disc list-inside text-gray-700 space-y-2 mb-4">
-                        <li>Designed and developed backend microservices to handle order creation, lifecycle tracking, and cancellation workflows.</li>
-                        <li>Built secure REST APIs with JWT-based authentication and role-based access control (RBAC).</li>
-                        <li>Managed order lifecycle states using enum-driven business logic with structured service and controller layers.</li>
-                        <li>Optimized MySQL queries and indexing strategies, improving data retrieval performance by approximately 35%.</li>
-                        <li>Implemented global exception handling, input validation, and pagination to deliver production-ready and scalable APIs.</li>
-                    </ul>
-                
-                    <div class="flex space-x-4">
-                        <a href="https://github.com/Navi2510/Order-Management-System-Backend" target="_blank" class="text-gray-800 hover:underline flex items-center">
-                            <i class="fab fa-github mr-2"></i>GitHub Repo
+                <!-- right: tech + links -->
+                <div class="lg:col-span-2 space-y-6 reveal">
+                    <div class="card bg-gradient-to-br from-blue-900 to-blue-700 text-white rounded-xl shadow-md p-6">
+                        <h3 class="text-xl font-semibold mb-4"><i class="fas fa-rocket mr-2"></i>Try It</h3>
+                        <a href="https://asisto.in" target="_blank" rel="noopener" class="block text-center bg-white text-blue-900 font-bold py-3 rounded-lg hover:bg-blue-50 transition mb-3">
+                            <i class="fas fa-arrow-up-right-from-square mr-2"></i>Visit asisto.in
+                        </a>
+                        <a href="https://github.com/Navi2510/Assisto" target="_blank" rel="noopener" class="block text-center border border-white/60 font-semibold py-3 rounded-lg hover:bg-white/10 transition">
+                            <i class="fab fa-github mr-2"></i>View Source on GitHub
                         </a>
                     </div>
+
+                    <div class="card bg-white dark:bg-slate-900 rounded-xl shadow-md p-6">
+                        <h3 class="text-xl font-semibold text-blue-700 dark:text-blue-400 mb-3"><i class="fas fa-layer-group mr-2"></i>Tech Stack</h3>
+                        <div class="space-y-3 text-sm">
+                            <div><p class="font-semibold mb-1 text-slate-500 dark:text-slate-400 uppercase text-xs tracking-wider">Backend</p>
+                                <div class="flex flex-wrap gap-2"><span class="chip bg-orange-100 text-orange-800 dark:bg-orange-900/40 dark:text-orange-200">Java 21</span><span class="chip bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-200">Spring Boot 3.3</span><span class="chip bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-200">Spring Security</span><span class="chip bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-200">Spring Data JPA</span></div></div>
+                            <div><p class="font-semibold mb-1 text-slate-500 dark:text-slate-400 uppercase text-xs tracking-wider">Frontend</p>
+                                <div class="flex flex-wrap gap-2"><span class="chip bg-cyan-100 text-cyan-800 dark:bg-cyan-900/40 dark:text-cyan-200">React</span></div></div>
+                            <div><p class="font-semibold mb-1 text-slate-500 dark:text-slate-400 uppercase text-xs tracking-wider">Database</p>
+                                <div class="flex flex-wrap gap-2"><span class="chip bg-indigo-100 text-indigo-800 dark:bg-indigo-900/40 dark:text-indigo-200">PostgreSQL</span><span class="chip bg-indigo-100 text-indigo-800 dark:bg-indigo-900/40 dark:text-indigo-200">Flyway</span></div></div>
+                            <div><p class="font-semibold mb-1 text-slate-500 dark:text-slate-400 uppercase text-xs tracking-wider">DevOps</p>
+                                <div class="flex flex-wrap gap-2"><span class="chip bg-sky-100 text-sky-800 dark:bg-sky-900/40 dark:text-sky-200">Docker</span><span class="chip bg-sky-100 text-sky-800 dark:bg-sky-900/40 dark:text-sky-200">GitHub Actions</span><span class="chip bg-sky-100 text-sky-800 dark:bg-sky-900/40 dark:text-sky-200">DigitalOcean</span></div></div>
+                        </div>
+                    </div>
+
+                    <div class="card bg-white dark:bg-slate-900 rounded-xl shadow-md p-6">
+                        <h3 class="text-xl font-semibold text-blue-700 dark:text-blue-400 mb-3"><i class="fas fa-shield-halved mr-2"></i>Engineering Highlights</h3>
+                        <ul class="space-y-2 text-sm text-slate-700 dark:text-slate-300">
+                            <li><i class="fas fa-check text-emerald-500 mr-2"></i>Race-safe first-accept-wins assignment</li>
+                            <li><i class="fas fa-check text-emerald-500 mr-2"></i>Refresh-token rotation and account lockout</li>
+                            <li><i class="fas fa-check text-emerald-500 mr-2"></i>Versioned DB migrations with Flyway</li>
+                            <li><i class="fas fa-check text-emerald-500 mr-2"></i>Push-to-deploy CI/CD pipeline</li>
+                            <li><i class="fas fa-check text-emerald-500 mr-2"></i>Audit trail for every booking state change</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Technical Skills Section: Lists programming languages, technologies, and concepts -->
-<section id="skills" class="py-16 bg-blue-50">
-    <div class="container mx-auto px-8 md:px-16 lg:px-28 xl:px-36">
-        <h2 class="text-4xl font-bold mb-10 text-center section-heading mx-auto">Technical Skills</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 text-lg">
+    <!-- OTHER PROJECTS -->
+    <section id="projects" class="py-16 bg-blue-100 dark:bg-slate-900">
+        <div class="container mx-auto px-6 md:px-12 lg:px-24 xl:px-36 max-w-6xl">
+            <div class="text-center mb-12 reveal"><h2 class="text-4xl font-bold section-heading">More Projects</h2></div>
 
-            <!-- Languages Card -->
-            <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300">
-                <h3 class="text-xl font-semibold mb-3 text-blue-700 flex items-center">
-                    <i class="fas fa-code mr-3"></i>Languages
-                </h3>
-                <ul class="list-disc list-inside space-y-1">
-                    <li>C</li>
-                    <li>Core Java</li>
-                    <li>SQL</li>
-                    <li>HTML</li>
-                    <li>CSS</li>
-                    <li>JavaScript</li>
-                </ul>
-            </div>
-
-            <!-- Technologies Card -->
-            <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300">
-                <h3 class="text-xl font-semibold mb-3 text-blue-700 flex items-center">
-                    <i class="fas fa-laptop-code mr-3"></i>Technologies
-                </h3>
-                <ul class="list-disc list-inside space-y-1">
-                    <li>SpringBoot</li>
-                    <li>Spring Data JPA</li>
-                    <li>Spring Security</li>
-                    <li>Hibernate</li>
-                    <li>RESTful APIs</li>
-                    <li>Microservices</li>
-                    <li>Redis</li>
-                    <li>Apache Kafka</li>
-                    <li>Kubernetes</li>
-                    <li>Bootstrap</li>
-                    <li>Node.js</li>
-                </ul>
-            </div>
-
-            <!-- Concepts Card -->
-            <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300">
-                <h3 class="text-xl font-semibold mb-3 text-blue-700 flex items-center">
-                    <i class="fas fa-lightbulb mr-3"></i>Concepts
-                </h3>
-                <ul class="list-disc list-inside space-y-1">
-                    <li>Object Oriented Programming</li>
-                    <li>Database Management System</li>
-                    <li>Operating System</li>
-                    <li>Data Structures and Algorithms</li>
-                    <li>System Design</li>
-                    <li>Multithreading</li>
-                    <li>Unit Testing</li>
-                    <li>MVC Architecture</li>
-                    <li>Layered Architecture</li>
-                    <li>Clean Architecture</li>
-                    <li>JWT Authentication</li>
-                    <li>Role-Based Access Control (RBAC)</li>
-                </ul>
-            </div>
-
-            <!-- Database Card -->
-            <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300">
-                <h3 class="text-xl font-semibold mb-3 text-blue-700 flex items-center">
-                    <i class="fas fa-database mr-3"></i>Database
-                </h3>
-                <ul class="list-disc list-inside space-y-1">
-                    <li>MySQL</li>
-                    <li>MongoDB</li>
-                    <li>Oracle</li>
-                    <li>SQL Joins</li>
-                    <li>Indexing</li>
-                    <li>Query Optimization</li>
-                </ul>
-            </div>
-
-            <!-- IDEs Card -->
-            <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300">
-                <h3 class="text-xl font-semibold mb-3 text-blue-700 flex items-center">
-                    <i class="fas fa-terminal mr-3"></i>IDEs
-                </h3>
-                <ul class="list-disc list-inside space-y-1">
-                    <li>VS Code</li>
-                    <li>Intellij Idea</li>
-                    <li>Eclipse</li>
-                    <li>Netbeans</li>
-                </ul>
-            </div>
-
-            <!-- Tools Card -->
-            <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300">
-                <h3 class="text-xl font-semibold mb-3 text-blue-700 flex items-center">
-                    <i class="fas fa-cogs mr-3"></i>Tools
-                </h3>
-                <ul class="list-disc list-inside space-y-1">
-                    <li>Git</li>
-                    <li>Github</li>
-                    <li>BitBucket</li>
-                    <li>PostMan</li>
-                    <li>Maven</li>
-                    <li>Jira</li>
-                    <li>AWS</li>
-                </ul>
-            </div>
-
-          </div>
-       </div>
-   </section>
-    <!-- Education Section: Displays academic background -->
-    <section id="education" class="py-16 bg-blue-100">
-        <div class="container mx-auto px-8 md:px-16 lg:px-28 xl:px-36">
-            <h2 class="text-4xl font-bold mb-10 text-center section-heading mx-auto">Education</h2>
-
-            <!-- B.Tech Education -->
-            <div class="bg-white p-8 rounded-lg shadow-md mb-8 hover:shadow-lg transition duration-300">
-                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-2">
-                    <h3 class="text-2xl font-semibold">Bachelor of Technology in Information Technology</h3>
-                    <span class="text-gray-600 text-sm md:text-base mt-1 md:mt-0">Nov 2020 - June 2024</span>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- OMS -->
+                <div class="card reveal bg-white dark:bg-slate-800 p-7 rounded-xl shadow-md flex flex-col">
+                    <h3 class="text-2xl font-semibold mb-1 text-blue-700 dark:text-blue-400"><a href="https://github.com/Navi2510/Order-Management-System-Backend" target="_blank" rel="noopener" class="hover:underline">Order Management System</a></h3>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 mb-4">Java, Spring Boot, Spring Security, JPA/Hibernate, MySQL · 2025</p>
+                    <ul class="list-disc pl-5 space-y-2 text-slate-700 dark:text-slate-300 mb-5 flex-1">
+                        <li>Designed backend microservices for order creation, lifecycle tracking and cancellation workflows.</li>
+                        <li>Built secure REST APIs with JWT authentication and role-based access control (RBAC).</li>
+                        <li>Managed order states with enum-driven business logic and clean service/controller layers.</li>
+                        <li>Optimized MySQL queries and indexing, improving data retrieval by ~35%.</li>
+                        <li>Added global exception handling, input validation and pagination for production-ready APIs.</li>
+                    </ul>
+                    <a href="https://github.com/Navi2510/Order-Management-System-Backend" target="_blank" rel="noopener" class="font-medium hover:underline"><i class="fab fa-github mr-2"></i>GitHub Repo</a>
                 </div>
-                <p class="text-lg font-medium text-blue-700 mb-2">Dr. A.P.J. Abdul Kalam Technical University</p>
-                <p class="text-gray-600 mb-4">Lucknow, Uttar Pradesh (GPA: 8.41 / 10)</p>
-                <ul class="list-disc list-inside text-gray-700 space-y-2">
-                    <li>Relevant Coursework: Data Structures and Algorithms Concepts, Operating System, DBMS, Cloud Computing, Web Technology</li>
-                </ul>
-            </div>
 
-            <!-- Intermediate Education -->
-            <div class="bg-white p-8 rounded-lg shadow-md mb-8 hover:shadow-lg transition duration-300">
-                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-2">
-                    <h3 class="text-2xl font-semibold">Intermediate (PCM)</h3>
-                    <span class="text-gray-600 text-sm md:text-base mt-1 md:mt-0">Apr 2019 - Mar 2020</span>
+                <!-- CareerHive -->
+                <div class="card reveal bg-white dark:bg-slate-800 p-7 rounded-xl shadow-md flex flex-col">
+                    <h3 class="text-2xl font-semibold mb-1 text-blue-700 dark:text-blue-400"><a href="https://github.com/Navi2510/CareerHive" target="_blank" rel="noopener" class="hover:underline">CareerHive</a></h3>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 mb-4">Spring Boot, Spring Data JPA, MySQL, Thymeleaf, HTML, CSS · Feb 2025</p>
+                    <ul class="list-disc pl-5 space-y-2 text-slate-700 dark:text-slate-300 mb-5 flex-1">
+                        <li>Developed a job portal where users can manage job applications end to end.</li>
+                        <li>Recruiter features: post jobs, track applicants and full CRUD, reducing manual effort.</li>
+                        <li>Job seeker features: resume upload, profile creation and one-click applications.</li>
+                        <li>Advanced search filters (WFH, Hybrid, Onsite) for better job discovery.</li>
+                    </ul>
+                    <a href="https://github.com/Navi2510/CareerHive" target="_blank" rel="noopener" class="font-medium hover:underline"><i class="fab fa-github mr-2"></i>GitHub Repo</a>
                 </div>
-                <p class="text-lg font-medium text-blue-700 mb-2">Reliance Academy Sr. Secondary School</p>
-                <p class="text-gray-600 mb-4">Gorakhpur, Uttar Pradesh (Percentage: 87.8%)</p>
-                <ul class="list-disc list-inside text-gray-700 space-y-2">
-                    <li>Relevant Coursework: PCM (Physics, Chemistry, Mathematics)</li>
-                </ul>
-            </div>
 
-            <!-- High School Education -->
-            <div class="bg-white p-8 rounded-lg shadow-md hover:shadow-lg transition duration-300">
-                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-2">
-                    <h3 class="text-2xl font-semibold">High School (Science)</h3>
-                    <span class="text-gray-600 text-sm md:text-base mt-1 md:mt-0">Apr 2017 - Mar 2018</span>
+                <!-- Hostel Finder -->
+                <div class="card reveal bg-white dark:bg-slate-800 p-7 rounded-xl shadow-md flex flex-col">
+                    <h3 class="text-2xl font-semibold mb-1 text-blue-700 dark:text-blue-400"><a href="https://github.com/Navi2510/Hostel-Booking-Website" target="_blank" rel="noopener" class="hover:underline">Hostel Finder</a></h3>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 mb-4">HTML, CSS, JavaScript, Bootstrap · Mar 2024</p>
+                    <ul class="list-disc pl-5 space-y-2 text-slate-700 dark:text-slate-300 mb-5 flex-1">
+                        <li>Hostel booking platform helping students find affordable accommodation across cities.</li>
+                        <li>Responsive front end with Bootstrap and JavaScript for every device size.</li>
+                        <li>Integrated a payment gateway for hassle-free room bookings.</li>
+                    </ul>
+                    <a href="https://github.com/Navi2510/Hostel-Booking-Website" target="_blank" rel="noopener" class="font-medium hover:underline"><i class="fab fa-github mr-2"></i>GitHub Repo</a>
                 </div>
-                <p class="text-lg font-medium text-blue-700 mb-2">Don Bosco Sr. Secondary School</p>
-                <p class="text-600 mb-4">Gorakhpur, Uttar Pradesh (Percentage: 90%)</p>
-                <ul class="list-disc list-inside text-gray-700 space-y-2">
-                    <li>Relevant Coursework: Science</li>
-                </ul>
+
+                <!-- PlayX -->
+                <div class="card reveal bg-white dark:bg-slate-800 p-7 rounded-xl shadow-md flex flex-col">
+                    <h3 class="text-2xl font-semibold mb-1 text-blue-700 dark:text-blue-400"><a href="https://github.com/Navi2510/PlayX" target="_blank" rel="noopener" class="hover:underline">PlayX</a></h3>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 mb-4">React.js, RapidAPI, HTML, CSS · Oct 2023</p>
+                    <ul class="list-disc pl-5 space-y-2 text-slate-700 dark:text-slate-300 mb-5 flex-1">
+                        <li>YouTube-like video streaming platform built with React.js and the YouTube Data API.</li>
+                        <li>Search, category filtering and a responsive UI.</li>
+                        <li>Video player interface with playlist management.</li>
+                    </ul>
+                    <div class="flex gap-5 font-medium">
+                        <a href="https://play-x-ten.vercel.app/" target="_blank" rel="noopener" class="hover:underline"><i class="fas fa-external-link-alt mr-2"></i>Live Demo</a>
+                        <a href="https://github.com/Navi2510/PlayX" target="_blank" rel="noopener" class="hover:underline"><i class="fab fa-github mr-2"></i>GitHub Repo</a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Contact Section: Provides contact details and social links -->
-    <section id="contact" class="py-16 bg-gradient-to-br from-blue-900 via-blue-700 to-white text-gray-900 text-center">
+    <!-- SKILLS -->
+    <section id="skills" class="py-16 bg-blue-50 dark:bg-slate-950">
+        <div class="container mx-auto px-6 md:px-12 lg:px-24 xl:px-36 max-w-6xl">
+            <div class="text-center mb-12 reveal"><h2 class="text-4xl font-bold section-heading">Technical Skills</h2></div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="card reveal bg-white dark:bg-slate-900 p-6 rounded-xl shadow-md">
+                    <h3 class="text-lg font-semibold mb-3 text-blue-700 dark:text-blue-400"><i class="fas fa-code mr-2"></i>Languages</h3>
+                    <div class="flex flex-wrap gap-2"><span class="chip bg-slate-100 dark:bg-slate-800">Java (8+, 17, 21)</span><span class="chip bg-slate-100 dark:bg-slate-800">SQL</span><span class="chip bg-slate-100 dark:bg-slate-800">JavaScript</span><span class="chip bg-slate-100 dark:bg-slate-800">HTML / CSS</span></div>
+                </div>
+                <div class="card reveal bg-white dark:bg-slate-900 p-6 rounded-xl shadow-md">
+                    <h3 class="text-lg font-semibold mb-3 text-blue-700 dark:text-blue-400"><i class="fab fa-java mr-2"></i>Core Java</h3>
+                    <div class="flex flex-wrap gap-2"><span class="chip bg-slate-100 dark:bg-slate-800">Collections</span><span class="chip bg-slate-100 dark:bg-slate-800">Multithreading &amp; Concurrency</span><span class="chip bg-slate-100 dark:bg-slate-800">Streams &amp; Lambdas</span><span class="chip bg-slate-100 dark:bg-slate-800">Exception Handling</span><span class="chip bg-slate-100 dark:bg-slate-800">JVM</span></div>
+                </div>
+                <div class="card reveal bg-white dark:bg-slate-900 p-6 rounded-xl shadow-md">
+                    <h3 class="text-lg font-semibold mb-3 text-blue-700 dark:text-blue-400"><i class="fas fa-leaf mr-2"></i>Frameworks</h3>
+                    <div class="flex flex-wrap gap-2"><span class="chip bg-slate-100 dark:bg-slate-800">Spring Boot</span><span class="chip bg-slate-100 dark:bg-slate-800">Spring MVC</span><span class="chip bg-slate-100 dark:bg-slate-800">Spring Security</span><span class="chip bg-slate-100 dark:bg-slate-800">Spring Data JPA</span><span class="chip bg-slate-100 dark:bg-slate-800">Hibernate</span><span class="chip bg-slate-100 dark:bg-slate-800">Resilience4j</span><span class="chip bg-slate-100 dark:bg-slate-800">React</span></div>
+                </div>
+                <div class="card reveal bg-white dark:bg-slate-900 p-6 rounded-xl shadow-md">
+                    <h3 class="text-lg font-semibold mb-3 text-blue-700 dark:text-blue-400"><i class="fas fa-server mr-2"></i>Backend</h3>
+                    <div class="flex flex-wrap gap-2"><span class="chip bg-slate-100 dark:bg-slate-800">REST APIs</span><span class="chip bg-slate-100 dark:bg-slate-800">Microservices</span><span class="chip bg-slate-100 dark:bg-slate-800">API Gateway</span><span class="chip bg-slate-100 dark:bg-slate-800">Event-Driven Architecture</span><span class="chip bg-slate-100 dark:bg-slate-800">Kafka</span><span class="chip bg-slate-100 dark:bg-slate-800">Redis</span></div>
+                </div>
+                <div class="card reveal bg-white dark:bg-slate-900 p-6 rounded-xl shadow-md">
+                    <h3 class="text-lg font-semibold mb-3 text-blue-700 dark:text-blue-400"><i class="fas fa-database mr-2"></i>Databases</h3>
+                    <div class="flex flex-wrap gap-2"><span class="chip bg-slate-100 dark:bg-slate-800">MySQL</span><span class="chip bg-slate-100 dark:bg-slate-800">PostgreSQL</span><span class="chip bg-slate-100 dark:bg-slate-800">MongoDB</span><span class="chip bg-slate-100 dark:bg-slate-800">Query Optimization</span><span class="chip bg-slate-100 dark:bg-slate-800">Indexing</span><span class="chip bg-slate-100 dark:bg-slate-800">Transactions</span><span class="chip bg-slate-100 dark:bg-slate-800">Flyway</span></div>
+                </div>
+                <div class="card reveal bg-white dark:bg-slate-900 p-6 rounded-xl shadow-md">
+                    <h3 class="text-lg font-semibold mb-3 text-blue-700 dark:text-blue-400"><i class="fas fa-cloud mr-2"></i>Cloud &amp; DevOps</h3>
+                    <div class="flex flex-wrap gap-2"><span class="chip bg-slate-100 dark:bg-slate-800">GCP</span><span class="chip bg-slate-100 dark:bg-slate-800">AWS (EC2, S3)</span><span class="chip bg-slate-100 dark:bg-slate-800">Docker</span><span class="chip bg-slate-100 dark:bg-slate-800">Kubernetes</span><span class="chip bg-slate-100 dark:bg-slate-800">Jenkins</span><span class="chip bg-slate-100 dark:bg-slate-800">CI/CD</span><span class="chip bg-slate-100 dark:bg-slate-800">ELK</span><span class="chip bg-slate-100 dark:bg-slate-800">Prometheus</span><span class="chip bg-slate-100 dark:bg-slate-800">Grafana</span></div>
+                </div>
+                <div class="card reveal bg-white dark:bg-slate-900 p-6 rounded-xl shadow-md">
+                    <h3 class="text-lg font-semibold mb-3 text-blue-700 dark:text-blue-400"><i class="fas fa-vial mr-2"></i>Testing &amp; Security</h3>
+                    <div class="flex flex-wrap gap-2"><span class="chip bg-slate-100 dark:bg-slate-800">JUnit 5</span><span class="chip bg-slate-100 dark:bg-slate-800">Mockito</span><span class="chip bg-slate-100 dark:bg-slate-800">Postman</span><span class="chip bg-slate-100 dark:bg-slate-800">Swagger/OpenAPI</span><span class="chip bg-slate-100 dark:bg-slate-800">JWT</span><span class="chip bg-slate-100 dark:bg-slate-800">OAuth 2.0</span><span class="chip bg-slate-100 dark:bg-slate-800">RBAC</span></div>
+                </div>
+                <div class="card reveal bg-white dark:bg-slate-900 p-6 rounded-xl shadow-md">
+                    <h3 class="text-lg font-semibold mb-3 text-blue-700 dark:text-blue-400"><i class="fas fa-lightbulb mr-2"></i>Design</h3>
+                    <div class="flex flex-wrap gap-2"><span class="chip bg-slate-100 dark:bg-slate-800">Data Structures &amp; Algorithms</span><span class="chip bg-slate-100 dark:bg-slate-800">OOP</span><span class="chip bg-slate-100 dark:bg-slate-800">SOLID</span><span class="chip bg-slate-100 dark:bg-slate-800">Design Patterns</span><span class="chip bg-slate-100 dark:bg-slate-800">Low-Level Design</span><span class="chip bg-slate-100 dark:bg-slate-800">System Design</span></div>
+                </div>
+                <div class="card reveal bg-white dark:bg-slate-900 p-6 rounded-xl shadow-md">
+                    <h3 class="text-lg font-semibold mb-3 text-blue-700 dark:text-blue-400"><i class="fas fa-screwdriver-wrench mr-2"></i>Tools &amp; Practices</h3>
+                    <div class="flex flex-wrap gap-2"><span class="chip bg-slate-100 dark:bg-slate-800">Git</span><span class="chip bg-slate-100 dark:bg-slate-800">GitHub</span><span class="chip bg-slate-100 dark:bg-slate-800">Bitbucket</span><span class="chip bg-slate-100 dark:bg-slate-800">Maven</span><span class="chip bg-slate-100 dark:bg-slate-800">IntelliJ IDEA</span><span class="chip bg-slate-100 dark:bg-slate-800">Jira</span><span class="chip bg-slate-100 dark:bg-slate-800">Agile/Scrum</span><span class="chip bg-slate-100 dark:bg-slate-800">Code Reviews</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- EDUCATION -->
+    <section id="education" class="py-16 bg-blue-100 dark:bg-slate-900">
+        <div class="container mx-auto px-6 md:px-12 lg:px-24 xl:px-36 max-w-6xl">
+            <div class="text-center mb-12 reveal"><h2 class="text-4xl font-bold section-heading">Education</h2></div>
+
+            <div class="card reveal bg-white dark:bg-slate-800 p-7 rounded-xl shadow-md mb-6">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-1">
+                    <h3 class="text-xl md:text-2xl font-semibold">Bachelor of Technology in Information Technology</h3>
+                    <span class="text-sm text-slate-500 dark:text-slate-400">Nov 2020 – June 2024</span>
+                </div>
+                <p class="text-lg font-medium text-blue-700 dark:text-blue-400">Dr. A.P.J. Abdul Kalam Technical University (AKTU)</p>
+                <p class="text-slate-500 dark:text-slate-400 mb-3">Lucknow, Uttar Pradesh · CGPA: 8.41 / 10</p>
+                <p class="text-slate-700 dark:text-slate-300">Relevant coursework: Data Structures and Algorithms, Operating Systems, DBMS, Cloud Computing, Web Technology.</p>
+            </div>
+
+            <div class="card reveal bg-white dark:bg-slate-800 p-7 rounded-xl shadow-md mb-6">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-1">
+                    <h3 class="text-xl md:text-2xl font-semibold">Intermediate (PCM)</h3>
+                    <span class="text-sm text-slate-500 dark:text-slate-400">Apr 2019 – Mar 2020</span>
+                </div>
+                <p class="text-lg font-medium text-blue-700 dark:text-blue-400">Reliance Academy Sr. Secondary School</p>
+                <p class="text-slate-500 dark:text-slate-400">Gorakhpur, Uttar Pradesh · 87.8%</p>
+            </div>
+
+            <div class="card reveal bg-white dark:bg-slate-800 p-7 rounded-xl shadow-md">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-1">
+                    <h3 class="text-xl md:text-2xl font-semibold">High School (Science)</h3>
+                    <span class="text-sm text-slate-500 dark:text-slate-400">Apr 2017 – Mar 2018</span>
+                </div>
+                <p class="text-lg font-medium text-blue-700 dark:text-blue-400">Don Bosco Sr. Secondary School</p>
+                <p class="text-slate-500 dark:text-slate-400">Gorakhpur, Uttar Pradesh · 90%</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="hero-bg text-white py-16 text-center">
         <div class="container mx-auto px-6">
-            <h2 class="text-4xl font-bold mb-8 section-heading mx-auto">Get In Touch</h2>
-            <p class="text-base mb-8">Have a question or want to work together? Feel free to reach out!</p>
-            <div class="flex flex-wrap justify-center items-center space-y-4 md:space-y-0 md:space-x-8 text-base">
-                <a href="tel:+917007749979" class="flex items-center hover:text-blue-600 transition duration-300 rounded-md p-2">
-                    <i class="fas fa-phone mr-2"></i> +91-7007749979
-                </a>
-                <a href="mailto:navneetsinghit25@gmail.com" class="flex items-center hover:text-blue-600 transition duration-300 rounded-md p-2">
-                    <i class="fas fa-envelope mr-2"></i> navneetsinghit25@gmail.com
-                </a>
-                <a href="https://linkedin.com/in/navneetsingh25" target="_blank" class="flex items-center hover:text-blue-600 transition duration-300 rounded-md p-2">
-                    <i class="fab fa-linkedin mr-2"></i> linkedin.com/in/navneetsingh25
-                </a>
-                <a href="https://github.com/Navi2510" target="_blank" class="flex items-center hover:text-blue-600 transition duration-300 rounded-md p-2">
-                    <i class="fab fa-github mr-2"></i> github.com/Navi2510
-                </a>
+            <h2 class="text-4xl font-bold mb-3 reveal">Get In Touch</h2>
+            <p class="text-blue-100 mb-8 max-w-xl mx-auto reveal">Have a question, an opportunity or want to build something together? My inbox is always open.</p>
+            <div class="flex flex-wrap justify-center gap-4 mb-8 reveal">
+                <a href="mailto:navneetsinghit25@gmail.com" class="flex items-center bg-white/10 hover:bg-white/20 border border-white/20 rounded-full px-5 py-3 transition"><i class="fas fa-envelope mr-3"></i>navneetsinghit25@gmail.com</a>
+                <a href="tel:+917007749979" class="flex items-center bg-white/10 hover:bg-white/20 border border-white/20 rounded-full px-5 py-3 transition"><i class="fas fa-phone mr-3"></i>+91-7007749979</a>
+                <a href="https://linkedin.com/in/navneetsingh25" target="_blank" rel="noopener" class="flex items-center bg-white/10 hover:bg-white/20 border border-white/20 rounded-full px-5 py-3 transition"><i class="fab fa-linkedin mr-3"></i>LinkedIn</a>
+                <a href="https://github.com/Navi2510" target="_blank" rel="noopener" class="flex items-center bg-white/10 hover:bg-white/20 border border-white/20 rounded-full px-5 py-3 transition"><i class="fab fa-github mr-3"></i>GitHub</a>
+                <a href="https://leetcode.com/u/navneetsinghit25/" target="_blank" rel="noopener" class="flex items-center bg-white/10 hover:bg-white/20 border border-white/20 rounded-full px-5 py-3 transition"><i class="fas fa-code mr-3"></i>LeetCode</a>
             </div>
         </div>
     </section>
 
-    <!-- Footer Section: Copyright information -->
-    <footer class="bg-blue-950 text-white py-8 text-center text-sm">
-        <div class="container mx-auto">
-            <p>&copy; <span id="current-year"></span> Navneet Singh. All rights reserved.</p>
-        </div>
+    <footer class="bg-blue-950 text-blue-200 py-6 text-center text-sm">
+        <p>&copy; <span id="year"></span> Navneet Singh. All rights reserved.</p>
     </footer>
 
+    <button id="toTop" aria-label="Back to top" class="hidden fixed bottom-6 right-6 w-11 h-11 rounded-full bg-blue-600 hover:bg-blue-500 text-white shadow-lg z-50">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
     <script>
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('nav a').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault(); 
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
+        // footer year
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // theme toggle
+        document.getElementById('themeToggle').addEventListener('click', () => {
+            const isDark = document.documentElement.classList.toggle('dark');
+            try { localStorage.setItem('theme', isDark ? 'dark' : 'light'); } catch (e) {}
         });
 
-        // Set current year in footer
-        document.getElementById('current-year').textContent = new Date().getFullYear();
+        // mobile menu
+        const mobileMenu = document.getElementById('mobileMenu');
+        document.getElementById('menuBtn').addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+        mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.add('hidden')));
 
-        // Intersection Observer for active navigation links
-        const sections = document.querySelectorAll('section'); // Select all sections
-        const navLinks = document.querySelectorAll('.nav-item-link'); // Select all nav links
+        // typing effect
+        const phrases = ['Java Backend Engineer', 'SDE-I @ Flipkart', 'Microservices & API Gateway', 'Founder of Assisto'];
+        const typedEl = document.getElementById('typed');
+        let pi = 0, ci = 0, deleting = false;
+        function type() {
+            const word = phrases[pi];
+            typedEl.textContent = deleting ? word.slice(0, ci--) : word.slice(0, ci++);
+            let delay = deleting ? 40 : 80;
+            if (!deleting && ci > word.length) { deleting = true; delay = 1400; }
+            else if (deleting && ci < 0) { deleting = false; pi = (pi + 1) % phrases.length; ci = 0; delay = 300; }
+            setTimeout(type, delay);
+        }
+        type();
 
-        const observerOptions = {
-            root: null, // Use the viewport as the root
-            rootMargin: '-50% 0px -50% 0px', // When the middle of the section is in view
-            threshold: 0 // Observe any intersection change
-        };
+        // scroll reveal
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObserver.unobserve(e.target); } });
+        }, { threshold: 0.12 });
+        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-        const observer = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                const targetId = entry.target.id;
-                const correspondingLink = document.querySelector(`nav a[href="#${targetId}"]`);
-
-                if (entry.isIntersecting && correspondingLink) {
-                    // Check if the section is truly in the "active" zone (e.g., center of viewport)
-                    const rect = entry.target.getBoundingClientRect();
-                    const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
-                    
-                    // Consider a section "active" if its center is within the central 50% of the viewport
-                    const isCenteredEnough = (rect.top + rect.height / 2 > viewportHeight * 0.25) &&
-                                             (rect.top + rect.height / 2 < viewportHeight * 0.75);
-
-                    if (isCenteredEnough) {
-                        navLinks.forEach(link => link.classList.remove('active-nav-item')); // Remove from all
-                        correspondingLink.classList.add('active-nav-item'); // Add to current
-                    }
-                }
+        // count-up stats
+        const countObserver = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (!e.isIntersecting) return;
+                const el = e.target, target = +el.dataset.count, suffix = el.dataset.suffix || '';
+                let cur = 0; const step = Math.max(1, Math.ceil(target / 40));
+                const t = setInterval(() => {
+                    cur = Math.min(target, cur + step);
+                    el.textContent = cur + suffix;
+                    if (cur >= target) clearInterval(t);
+                }, 30);
+                countObserver.unobserve(el);
             });
-        }, observerOptions);
+        }, { threshold: 0.6 });
+        document.querySelectorAll('[data-count]').forEach(el => countObserver.observe(el));
 
-        // Observe each section
-        sections.forEach(section => {
-            observer.observe(section);
-        });
-
-        // Special handling for "Home" link if it refers to the first section (About)
-        // Ensure "Home" is active when at the very top or in the "About" section
-        const homeLink = document.querySelector('nav a[href="#about"]'); 
-        
-        // Function to update active link based on scroll position
-        const updateActiveLinkOnScroll = () => {
-            let currentActiveLink = null;
-            sections.forEach(section => {
-                const rect = section.getBoundingClientRect();
-                const correspondingLink = document.querySelector(`nav a[href="#${section.id}"]`);
-                
-                // If section is at least 30% visible from the top
-                if (rect.top <= window.innerHeight * 0.3 && rect.bottom >= window.innerHeight * 0.3) {
-                    currentActiveLink = correspondingLink;
-                }
-            });
-
-            navLinks.forEach(link => link.classList.remove('active-nav-item'));
-            if (currentActiveLink) {
-                currentActiveLink.classList.add('active-nav-item');
-            } else if (window.scrollY === 0) { // If at the very top, ensure Home/About is active
-                 homeLink.classList.add('active-nav-item');
-            }
-        };
-
-        // Attach the scroll listener
-        window.addEventListener('scroll', updateActiveLinkOnScroll);
-
-        // Initial check on load
-        updateActiveLinkOnScroll();
+        // active nav link + progress bar + back to top
+        const sections = [...document.querySelectorAll('section[id]')];
+        const links = [...document.querySelectorAll('.nav-link')];
+        const progress = document.getElementById('progress');
+        const toTop = document.getElementById('toTop');
+        function onScroll() {
+            const y = window.scrollY, h = document.documentElement.scrollHeight - window.innerHeight;
+            progress.style.width = (h > 0 ? (y / h) * 100 : 0) + '%';
+            toTop.classList.toggle('hidden', y < 500);
+            let current = sections[0].id;
+            sections.forEach(s => { if (s.getBoundingClientRect().top <= window.innerHeight * 0.35) current = s.id; });
+            links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + current));
+        }
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+        toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
     </script>
 </body>
 </html>
